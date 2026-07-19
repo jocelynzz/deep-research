@@ -15,13 +15,30 @@ The design follows the useful pattern behind modern deep-research systems: plan,
 
 ## Architecture
 
-```text
-Question
-  -> brief + draft
-  -> supervisor
-  -> parallel research agents -> web search -> page summaries -> compressed notes
-  -> report refinement -> red-team critique + quality evaluation
-  -> final report
+```mermaid
+flowchart TD
+    question[User question] --> brief[Research brief & initial draft]
+    brief --> supervisor[Supervisor]
+
+    supervisor --> research[Parallel research agents]
+    research --> search[Pluggable web search\nTavily by default]
+    search --> summarize[Page summaries]
+    summarize --> notes[Compressed research notes]
+
+    notes --> refine[Draft refinement]
+    refine --> redteam[Red-team critique]
+    refine --> evaluate[Quality evaluation\ncompleteness · accuracy · coherence]
+    redteam --> supervisor
+    evaluate --> supervisor
+
+    supervisor --> final[Final report]
+
+    classDef process fill:#E8F0FE,stroke:#4285F4,color:#202124;
+    classDef quality fill:#FCE8E6,stroke:#EA4335,color:#202124;
+    classDef output fill:#E6F4EA,stroke:#34A853,color:#202124;
+    class supervisor,research,search,summarize,notes,refine process;
+    class redteam,evaluate quality;
+    class final output;
 ```
 
 ## Setup
