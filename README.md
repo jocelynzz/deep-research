@@ -17,28 +17,38 @@ The design follows the useful pattern behind modern deep-research systems: plan,
 
 ```mermaid
 flowchart TD
-    question[User question] --> brief[Research brief & initial draft]
-    brief --> supervisor[Supervisor]
+    question[User question] --> draft[Draft Agent\nresearch brief + initial draft]
+    draft --> supervisor[Supervisor Agent\nBlue Team Agent: coordinator]
 
-    supervisor --> research[Parallel research agents]
-    research --> search[Pluggable web search\nTavily by default]
-    search --> summarize[Page summaries]
-    summarize --> notes[Compressed research notes]
+    subgraph research_loop[Parallel research loop]
+        researcher[Researcher Main Agent\nqueries and reasons] --> search[Search provider\nTavily by default]
+        search --> summarizer[Researcher Summarizer Agent\ncondenses pages]
+        summarizer --> compressor[Researcher Compressor Agent\ncompresses notes]
+    end
+    supervisor --> researcher
+    compressor --> supervisor
 
-    notes --> refine[Draft refinement]
-    refine --> redteam[Red-team critique]
-    refine --> evaluate[Quality evaluation\ncompleteness · accuracy · coherence]
-    redteam --> supervisor
-    evaluate --> supervisor
+    supervisor --> writer[Writer Agent\nBlue Team Agent: refinement]
 
-    supervisor --> final[Final report]
+    subgraph quality_loop[Quality loop: Red Team Agent vs. Blue Team Agents]
+        redteam[Red Team Agent\nfinds gaps and flaws] --> supervisor
+        evaluator[Evaluator Agent\nscores completeness, accuracy, and coherence] --> supervisor
+        supervisor --> writer
+    end
+    writer --> redteam
+    writer --> evaluator
+
+    writer --> final[Writer Agent\nfinal report]
+    pruner[Context Pruner Agent\nconfigured for future use] -. context management .-> supervisor
 
     classDef process fill:#E8F0FE,stroke:#4285F4,color:#202124;
-    classDef quality fill:#FCE8E6,stroke:#EA4335,color:#202124;
-    classDef output fill:#E6F4EA,stroke:#34A853,color:#202124;
-    class supervisor,research,search,summarize,notes,refine process;
-    class redteam,evaluate quality;
-    class final output;
+    classDef red fill:#FCE8E6,stroke:#EA4335,color:#202124;
+    classDef blue fill:#E6F4EA,stroke:#34A853,color:#202124;
+    classDef reserved fill:#F3F4F6,stroke:#9CA3AF,color:#374151,stroke-dasharray: 5 5;
+    class draft,supervisor,researcher,search,summarizer,compressor process;
+    class redteam,evaluator red;
+    class writer,final blue;
+    class pruner reserved;
 ```
 
 ## Setup
