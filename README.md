@@ -1,6 +1,6 @@
 # Deep Research
 
-`Deep Research` is a personal, experimental multi-agent research workflow. It turns a broad question into a research brief, delegates focused web research, compresses evidence, challenges a draft with a red-team pass, evaluates report quality, and produces a final synthesis.
+`Deep Research` is a multi-agent research workflow. It turns a broad question into a research brief, delegates focused web research, compresses evidence, challenges a draft with a red-team pass, evaluates report quality, and produces a final synthesis.
 
 It is inspired by the broader wave of agentic research products, including [OpenAI deep research](https://openai.com/index/introducing-deep-research/), [Gemini Deep Research](https://blog.google/innovation-and-ai/models-and-research/gemini-models/next-generation-gemini-deep-research/), and [Perplexity Deep Research](https://research.perplexity.ai/articles/evaluating-deep-research-performance-in-the-wild-with-the-draco-benchmark). This is an independent personal project, not affiliated with or endorsed by any of those companies.
 
